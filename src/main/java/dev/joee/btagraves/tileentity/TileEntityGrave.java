@@ -8,8 +8,11 @@ import net.minecraft.core.item.ItemStack;
 import net.minecraft.core.net.command.TextFormatting;
 import net.minecraft.core.net.packet.Packet;
 import net.minecraft.core.net.packet.PacketTileEntityData;
+import net.minecraft.core.player.inventory.container.ContainerInventory;
 
 import java.util.UUID;
+
+import static dev.joee.btagraves.BtaGraves.ARMOR_INVENTORY_SIZE;
 
 public class TileEntityGrave extends TileEntity {
 	private UUID playerUuid;
@@ -22,8 +25,8 @@ public class TileEntityGrave extends TileEntity {
 		return new TileEntityGrave(
 			UUID.fromString("f84c6a79-0a4e-45e0-879b-cd49ebd4c4e2"),
 			TextFormatting.WHITE + "Herobrine " + TextFormatting.RED + "is watching.",
-			new ItemStack[36],
-			new ItemStack[4]
+			new ItemStack[ContainerInventory.playerMainInventorySize()],
+			new ItemStack[ARMOR_INVENTORY_SIZE]
 		);
 	}
 
@@ -57,7 +60,8 @@ public class TileEntityGrave extends TileEntity {
 		this.setUUID(UUID.fromString(nbt.getString("PlayerUUID")));
 		this.deathMessage = nbt.getString("DeathMessage");
 
-		this.mainInventory = new ItemStack[36];
+
+		this.mainInventory = new ItemStack[ContainerInventory.playerMainInventorySize()];
 		ListTag mainItemsNbt = nbt.getList("MainItems");
 
 		for (int i = 0; i < mainItemsNbt.tagCount(); i++) {
@@ -68,7 +72,7 @@ public class TileEntityGrave extends TileEntity {
 			}
 		}
 
-		this.armorInventory = new ItemStack[4];
+		this.armorInventory = new ItemStack[ARMOR_INVENTORY_SIZE];
 		ListTag armorItemsNbt = nbt.getList("ArmorItems");
 
 		for (int i = 0; i < armorItemsNbt.tagCount(); i++) {
@@ -78,6 +82,7 @@ public class TileEntityGrave extends TileEntity {
 				this.armorInventory[j] = ItemStack.readItemStackFromNbt(itemNbt);
 			}
 		}
+
 	}
 
 	@Override

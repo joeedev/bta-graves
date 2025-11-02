@@ -4,6 +4,7 @@ import dev.joee.btagraves.block.BlockLogicGrave;
 import dev.joee.btagraves.item.ItemGrave;
 import dev.joee.btagraves.tileentity.TileEntityGrave;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.block.Block;
 import net.minecraft.core.block.tag.BlockTags;
 import net.minecraft.core.item.ItemStack;
@@ -23,6 +24,7 @@ import java.util.UUID;
 public class BtaGraves implements ModInitializer, RecipeEntrypoint, GameStartEntrypoint {
     public static final String MOD_ID = "btagraves";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static int ARMOR_INVENTORY_SIZE;
 
 	public static Block<BlockLogicGrave> graveBlock;
 	public static ItemGrave graveItem;
@@ -67,6 +69,11 @@ public class BtaGraves implements ModInitializer, RecipeEntrypoint, GameStartEnt
 			TileEntityGrave.class,
 			NamespaceID.getPermanent(MOD_ID, "grave")
 		);
+		if(FabricLoader.getInstance().isModLoaded("aether")){
+			ARMOR_INVENTORY_SIZE = 8;
+		}else{
+			ARMOR_INVENTORY_SIZE = 4;
+		}
 	}
 
 	@Override
